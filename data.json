@@ -1,0 +1,35 @@
+[
+    {
+        "id": "singles-inferno-5",
+        "title": "Single's Inferno 5",
+        "badge": "K-Reality",
+        "rating": "4.8",
+        "episodesCount": "12",
+        "year": "2024",
+        "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=400&auto=format&fit=crop",
+        "desc": "Ten singles head to a deserted island in search of love. Who will leave Inferno together?",
+        "tags": ["Dating", "Reality", "Romance"]
+    },
+    {
+        "id": "running-man",
+        "title": "Running Man",
+        "badge": "K-Variety",
+        "rating": "4.7",
+        "episodesCount": "680",
+        "year": "2010",
+        "image": "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=400&auto=format&fit=crop",
+        "desc": "A variety show where members complete missions all over Korea.",
+        "tags": ["Variety", "Comedy", "Game"]
+    },
+    {
+        "id": "terrace-house",
+        "title": "Terrace House",
+        "badge": "J-Reality",
+        "rating": "4.6",
+        "episodesCount": "98",
+        "year": "2012",
+        "image": "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=400&auto=format&fit=crop",
+        "desc": "Strangers start living together in a house. Their real lives unfold.",
+        "tags": ["Life", "Romance", "Reality"]
+    }
+]
