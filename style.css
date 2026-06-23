@@ -303,3 +303,24 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
     .shows-vertical-list { grid-template-columns: repeat(3, 1fr); }
     #myListContainer { grid-template-columns: repeat(5, 1fr); }
 }
+.episode-buttons-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.episode-btn {
+  background-color: #ffb6c1; 
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+}
+
+.episode-btn:hover {
+  background-color: #ff9eaa;
+}
