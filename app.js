@@ -31,7 +31,7 @@ let allShows = [
 " },
 { "name": "Episode 9", "url": "https://youtu.be/gPId-Q5oAos?si=xodd7DcwlHna3EOG
 " }
-]
+],
         "desc": "A romantic reality show where singles navigate modern dating, career aspirations, and relationship challenges in a bustling city.",
         "tags": ["Dating", "City Romance", "Heartwarming"]
     },
@@ -73,7 +73,7 @@ let allShows = [
 " },
 { "name": "Episode 7", "url": "https://youtu.be/sR_BZRexSiU?si=Fl5v2mAz-fZznqSM
 " }
-]
+],
         "desc": "A deeply emotional reality program following couples as they prepare for marriage and navigate the complexities of long-term commitment.",
         "tags": ["Marriage", "Reality", "Emotional"]
     },
@@ -350,21 +350,21 @@ function openDetailView(show) {
         updateWatchlistButton(show.id);
     }
 
-    const episodesGrid = document.querySelector('#detailView .episodes-grid');
-    if (episodesGrid) {
-        episodesGrid.innerHTML = ''; 
-        const colors = ['card-light-pink', 'card-light-purple', 'card-light-purple', 'card-light-pink'];
-        
-        for(let i = 1; i <= 4; i++) {
-            let searchQuery = encodeURIComponent(`${show.title} episode ${i}`).replace(/'/g, "%27");
-            const episodeLink = `https://www.youtube.com/results?search_query=${searchQuery}`;
+  const epContainer = document.getElementById("episode-links-container");
+    if (epContainer) {
+        // Clear out any old buttons first
+        epContainer.innerHTML = ""; 
 
-            episodesGrid.innerHTML += `
-                <div class="ep-box ${colors[i-1]}" style="cursor:pointer;" onclick="window.open('${episodeLink}', '_blank')">
-                    <h4>Episode ${i}</h4>
-                    <span class="play-text"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#E8618C"/><path d="M10 8L16 12L10 16V8Z" fill="white"/></svg> Watch</span>
-                </div>
-            `;
+        // Check if the show has episode links, then draw the buttons
+        if (show.episodeLinks && show.episodeLinks.length > 0) {
+            show.episodeLinks.forEach(link => {
+                const btn = document.createElement("a");
+                btn.href = link.url;
+                btn.textContent = link.name;
+                btn.className = "episode-btn";
+                btn.target = "_blank"; // Opens the video in a new tab!
+                epContainer.appendChild(btn);
+            });
         }
     }
 
