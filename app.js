@@ -13,25 +13,16 @@ let allShows = [
         "image": "https://i.mydramalist.com/JB43mY_4m.jpg",
         "heroImage": "https://i.mydramalist.com/JB43mY_4c.jpg?v=1",
         "episodeLinks": [
-{ "name": "Episode 1", "url": "https://youtu.be/iacXr4cN5lQ?si=KwJ4xqz8F6UNBEQW
-" },
-{ "name": "Episode 2", "url": "https://youtu.be/sSyPfgkXWOM?si=Y_yPiNyyLcRGOlvm
-" },
-{ "name": "Episode 3", "url": "https://youtu.be/pKgRrqbCECg?si=lojpcCwov2WGgK6o
-" },
-{ "name": "Episode 4", "url": "https://youtu.be/7BuyVdrhdGQ?si=eeODUt-TPmWZ8w2v
-" },
-{ "name": "Episode 5", "url": "https://youtu.be/C4nVYxlU-rM?si=yR4JS1pSIwrcUKEo
-" },
-{ "name": "Episode 6", "url": "https://youtu.be/hEeMHO6KMps?si=L5PmZUXv38LONJtC
-" },
-{ "name": "Episode 7", "url": "https://youtu.be/YEH3QDStDkw?si=gVHu42xH4f_3nCH_
-" },
-{ "name": "Episode 8", "url": "https://youtu.be/xRIxjmhDjbw?si=oTWCdVXHmq1UTjum
-" },
-{ "name": "Episode 9", "url": "https://youtu.be/gPId-Q5oAos?si=xodd7DcwlHna3EOG
-" }
-],
+            { "name": "Episode 1", "url": "https://youtu.be/iacXr4cN5lQ?si=KwJ4xqz8F6UNBEQW" },
+            { "name": "Episode 2", "url": "https://youtu.be/sSyPfgkXWOM?si=Y_yPiNyyLcRGOlvm" },
+            { "name": "Episode 3", "url": "https://youtu.be/pKgRrqbCECg?si=lojpcCwov2WGgK6o" },
+            { "name": "Episode 4", "url": "https://youtu.be/7BuyVdrhdGQ?si=eeODUt-TPmWZ8w2v" },
+            { "name": "Episode 5", "url": "https://youtu.be/C4nVYxlU-rM?si=yR4JS1pSIwrcUKEo" },
+            { "name": "Episode 6", "url": "https://youtu.be/hEeMHO6KMps?si=L5PmZUXv38LONJtC" },
+            { "name": "Episode 7", "url": "https://youtu.be/YEH3QDStDkw?si=gVHu42xH4f_3nCH_" },
+            { "name": "Episode 8", "url": "https://youtu.be/xRIxjmhDjbw?si=oTWCdVXHmq1UTjum" },
+            { "name": "Episode 9", "url": "https://youtu.be/gPId-Q5oAos?si=xodd7DcwlHna3EOG" }
+        ],
         "desc": "A romantic reality show where singles navigate modern dating, career aspirations, and relationship challenges in a bustling city.",
         "tags": ["Dating", "City Romance", "Heartwarming"]
     },
@@ -59,21 +50,14 @@ let allShows = [
         "image": "https://i.mydramalist.com/DkeYLo_4c.jpg?v=1",
         "heroImage": "https://i.mydramalist.com/oQwjPv_4m.jpg",
         "episodeLinks": [
-{ "name": "Episode 1", "url": "https://youtu.be/o19x4HnPXqk?si=IFGoedyDCkMjr3dL
-" },
-{ "name": "Episode 2", "url": "https://youtu.be/TNI_eZuFL5g?si=ZuVa0hN52JItMuKo
-" },
-{ "name": "Episode 3", "url": "https://youtu.be/f_y6wOI5bYo?si=p3EKjrvlGjBhPShF
-" },
-{ "name": "Episode 4", "url": "https://youtu.be/DGrGJVD-LJ8?si=8xotO0fm18Cdp9ku
-" },
-{ "name": "Episode 5", "url": "https://youtu.be/rHGi1dobtSY?si=znQv2L4IoS0OxbcB
-" },
-{ "name": "Episode 6", "url": "https://youtu.be/mcBydEwChaU?si=MwmbCsgSYQgW2Fn4
-" },
-{ "name": "Episode 7", "url": "https://youtu.be/sR_BZRexSiU?si=Fl5v2mAz-fZznqSM
-" }
-],
+            { "name": "Episode 1", "url": "https://youtu.be/o19x4HnPXqk?si=IFGoedyDCkMjr3dL" },
+            { "name": "Episode 2", "url": "https://youtu.be/TNI_eZuFL5g?si=ZuVa0hN52JItMuKo" },
+            { "name": "Episode 3", "url": "https://youtu.be/f_y6wOI5bYo?si=p3EKjrvlGjBhPShF" },
+            { "name": "Episode 4", "url": "https://youtu.be/DGrGJVD-LJ8?si=8xotO0fm18Cdp9ku" },
+            { "name": "Episode 5", "url": "https://youtu.be/rHGi1dobtSY?si=znQv2L4IoS0OxbcB" },
+            { "name": "Episode 6", "url": "https://youtu.be/mcBydEwChaU?si=MwmbCsgSYQgW2Fn4" },
+            { "name": "Episode 7", "url": "https://youtu.be/sR_BZRexSiU?si=Fl5v2mAz-fZznqSM" }
+        ],
         "desc": "A deeply emotional reality program following couples as they prepare for marriage and navigate the complexities of long-term commitment.",
         "tags": ["Marriage", "Reality", "Emotional"]
     },
