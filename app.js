@@ -21,7 +21,9 @@ let allShows = [
             { "name": "Episode 6", "url": "https://youtu.be/hEeMHO6KMps?si=L5PmZUXv38LONJtC" },
             { "name": "Episode 7", "url": "https://youtu.be/YEH3QDStDkw?si=gVHu42xH4f_3nCH_" },
             { "name": "Episode 8", "url": "https://youtu.be/xRIxjmhDjbw?si=oTWCdVXHmq1UTjum" },
-            { "name": "Episode 9", "url": "https://youtu.be/gPId-Q5oAos?si=xodd7DcwlHna3EOG" }
+            { "name": "Episode 9", "url": "https://youtu.be/gPId-Q5oAos?si=xodd7DcwlHna3EOG" },
+            { "name": "Episode 10", "url": "https://youtu.be/rRqAsivsAeI?si=XIkickTs4UgnsvIP" },
+            { "name": "Episode 11", "url": "https://youtu.be/WGQY2hToS1U?si=Qc0Ukb3_AZbUUIBV" }
         ],
         "desc": "A romantic reality show where singles navigate modern dating, career aspirations, and relationship challenges in a bustling city.",
         "tags": ["Dating", "City Romance", "Heartwarming"]
