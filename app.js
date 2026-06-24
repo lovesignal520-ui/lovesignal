@@ -59,8 +59,8 @@ let allShows = [
             { "name": "Episode 5", "url": "https://youtu.be/rHGi1dobtSY?si=znQv2L4IoS0OxbcB" },
             { "name": "Episode 6", "url": "https://youtu.be/mcBydEwChaU?si=MwmbCsgSYQgW2Fn4" },
             { "name": "Episode 7", "url": "https://youtu.be/sR_BZRexSiU?si=Fl5v2mAz-fZznqSM" },
-            { "name": "Episode 8", "url": "https://youtu.be/og2jryvi2TQ" },
-            { "name": "Episode 9", "url": "https://youtu.be/a5DVv_FuZTE" }
+            { "name": "Episode 8", "url": "https://youtu.be/og2jryvi2TQ?si=qrIatzhXOjvkbrtN" },
+            { "name": "Episode 9", "url": "https://youtu.be/a5DVv_FuZTE?si=i77kPMrv_HKK4LRk" }
         ],
         "desc": "A deeply emotional reality program following couples as they prepare for marriage and navigate the complexities of long-term commitment.",
         "tags": ["Marriage", "Reality", "Emotional"]
