@@ -23,7 +23,8 @@ let allShows = [
             { "name": "Episode 8", "url": "https://youtu.be/xRIxjmhDjbw?si=oTWCdVXHmq1UTjum" },
             { "name": "Episode 9", "url": "https://youtu.be/gPId-Q5oAos?si=xodd7DcwlHna3EOG" },
             { "name": "Episode 10", "url": "https://youtu.be/rRqAsivsAeI?si=XIkickTs4UgnsvIP" },
-            { "name": "Episode 11", "url": "https://youtu.be/WGQY2hToS1U?si=Qc0Ukb3_AZbUUIBV" }
+            { "name": "Episode 11", "url": "https://youtu.be/WGQY2hToS1U?si=Qc0Ukb3_AZbUUIBV" },
+            { "name": "Episode 12", "url": "https://youtu.be/5Lu1QZPbtAw?si=XQNRsAIMj8b1I9C-" }
         ],
         "desc": "A romantic reality show where singles navigate modern dating, career aspirations, and relationship challenges in a bustling city.",
         "tags": ["Dating", "City Romance", "Heartwarming"]
@@ -38,6 +39,9 @@ let allShows = [
         "year": "2026",
         "image": "https://i.mydramalist.com/81lbJW_4m.jpg",
         "heroImage": "https://i.mydramalist.com/mO51Y3_3m.jpg",
+        "episodeLinks": [
+            { "name": "Episode 10", "url": "https://www.dailymotion.com/video/k2m0NUNB7e6U4DH2w9M" },
+            { "name": "Episode 11", "url": "https://www.dailymotion.com/video/k4XMfT5PQZ3fjnH2AsC" }
         "desc": "Young men and women move into the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
         "tags": ["Romance", "Mystery", "Cohabitation"]
     },
@@ -60,7 +64,8 @@ let allShows = [
             { "name": "Episode 6", "url": "https://youtu.be/mcBydEwChaU?si=MwmbCsgSYQgW2Fn4" },
             { "name": "Episode 7", "url": "https://youtu.be/sR_BZRexSiU?si=Fl5v2mAz-fZznqSM" },
             { "name": "Episode 8", "url": "https://youtu.be/og2jryvi2TQ?si=qrIatzhXOjvkbrtN" },
-            { "name": "Episode 9", "url": "https://youtu.be/a5DVv_FuZTE?si=i77kPMrv_HKK4LRk" }
+            { "name": "Episode 9", "url": "https://youtu.be/a5DVv_FuZTE?si=i77kPMrv_HKK4LRk" },
+            { "name": "Episode 10", "url": "https://youtu.be/ZiDEtNy1Q04?si=kwVDLph_y8vE1vO2" }
         ],
         "desc": "A deeply emotional reality program following couples as they prepare for marriage and navigate the complexities of long-term commitment.",
         "tags": ["Marriage", "Reality", "Emotional"]
