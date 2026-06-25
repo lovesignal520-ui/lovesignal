@@ -42,7 +42,7 @@ let allShows = [
         "episodeLinks": [
             { "name": "Episode 10", "url": "https://www.dailymotion.com/video/k2m0NUNB7e6U4DH2w9M" },
             { "name": "Episode 11", "url": "https://www.dailymotion.com/video/k4XMfT5PQZ3fjnH2AsC" }
-        ]
+        ],
         "desc": "Young men and women move into the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
         "tags": ["Romance", "Mystery", "Cohabitation"]
     },
