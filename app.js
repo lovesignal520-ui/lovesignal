@@ -225,7 +225,7 @@ function loadShows() {
         });
     }
 
-    // C. Load Recent Updates 
+        // C. Load Recent Updates 
     const recentList = document.getElementById('homeRecentUpdatesList');
     if (recentList) {
         recentList.innerHTML = '';
@@ -234,14 +234,25 @@ function loadShows() {
         
         recentShows.forEach((show, index) => {
             const colors = ['card-light-pink', 'card-purple', 'card-pink', 'card-light-purple'];
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'scroll-item-wrapper';
+            wrapper.onclick = () => openDetailView(show);
+
             const card = document.createElement('div');
             card.className = `show-card tall-card ${colors[index % colors.length]}`;
             card.style.backgroundImage = `url('${show.image}')`;
-            card.style.cursor = 'pointer';
-            card.onclick = () => openDetailView(show);
-            recentList.appendChild(card);
+            
+            const title = document.createElement('span');
+            title.className = 'card-title-under';
+            title.innerText = show.title;
+
+            wrapper.appendChild(card);
+            wrapper.appendChild(title);
+            recentList.appendChild(wrapper);
         });
     }
+    
 
     // D. Populate Shows Tab
     const listContainer = document.getElementById('showsListContainer');
@@ -262,16 +273,17 @@ function loadShows() {
             listContainer.appendChild(card);
         });
     }
-    // E. Load Upcoming Shows
+        // E. Load Upcoming Shows
     const upcomingContainer = document.getElementById('upcomingShowsList');
     if (upcomingContainer) {
         upcomingContainer.innerHTML = '';
         upcomingShows.forEach((show, index) => {
             const colors = ['card-pink', 'card-purple', 'card-light-pink'];
             upcomingContainer.innerHTML += `
-                <div style="display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;">
+                <div class="scroll-item-wrapper">
                     <div class="show-card tall-card ${colors[index % colors.length]}" style="background-image: url('${show.image}');"></div>
-                    <button class="pill-btn outline-btn remind-btn" style="padding: 8px; font-size: 0.85rem; justify-content: center;">Remind me</button>
+                    <span class="card-title-under">${show.title}</span>
+                    <button class="pill-btn outline-btn remind-btn" style="padding: 8px; font-size: 0.85rem; justify-content: center; margin-top: 5px;">Remind me</button>
                 </div>
             `;
         });
@@ -366,7 +378,7 @@ function openDetailView(show) {
         }
     }
 
-    const relatedScroll = document.querySelector('#detailView .horizontal-scroll');
+        const relatedScroll = document.querySelector('#detailView .horizontal-scroll');
     if (relatedScroll) {
         relatedScroll.innerHTML = ''; 
         const relatedShows = allShows.filter(s => s.id !== show.id).slice(0, 3);
@@ -374,10 +386,12 @@ function openDetailView(show) {
         relatedShows.forEach((relatedShow, index) => {
             const bgColors = ['card-purple', 'card-pink', 'card-light-purple'];
             relatedScroll.innerHTML += `
-                <div class="show-card square-card ${bgColors[index % bgColors.length]} related-card" 
-                     style="background-image: url('${relatedShow.image}'); background-size: cover; cursor:pointer;"
-                     onclick="openDetailView(allShows.find(s => s.id === '${relatedShow.id}'))">
-                    <svg class="play-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#E8618C"/><path d="M10 8L16 12L10 16V8Z" fill="white"/></svg>
+                <div class="scroll-item-wrapper square" onclick="openDetailView(allShows.find(s => s.id === '${relatedShow.id}'))">
+                    <div class="show-card square-card ${bgColors[index % bgColors.length]} related-card" 
+                         style="background-image: url('${relatedShow.image}'); background-size: cover; cursor:pointer;">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#E8618C"/><path d="M10 8L16 12L10 16V8Z" fill="white"/></svg>
+                    </div>
+                    <span class="card-title-under">${relatedShow.title}</span>
                 </div>
             `;
         });
