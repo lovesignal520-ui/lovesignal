@@ -85,13 +85,13 @@ let allShows = [
         "tags": ["Noona Romance", "Sweet", "Dating"]
     }
 ];
+
 let upcomingShows = [
     {
         "id": "heart-signal-9",
         "title": "Heart Signal 9",
         "image": "https://i.mydramalist.com/KpOmbJ_4c.jpg?v=1"
-    },
-    
+    }
 ];
 
 let watchlist = JSON.parse(localStorage.getItem('lovesignal_watchlist')) || [];
@@ -122,23 +122,18 @@ function switchTab(viewId, navIndex) {
 }
 
 function switchShowTab(clickedTab, tabName) {
-    // 1. Change the visual highlight of the tab
     const tabs = document.querySelectorAll('#showsTopTabs .tab');
     tabs.forEach(tab => tab.classList.remove('active'));
     clickedTab.classList.add('active');
 
     let showsToDisplay = [];
 
-    // 2. Filter using our new exact "status" tags!
     if (tabName === 'Recent') {
         showsToDisplay = [...allShows].reverse();
-        
     } else if (tabName === 'Completed') {
         showsToDisplay = allShows.filter(show => show.status === "Completed");
-        
     } else if (tabName === 'New Release') {
         showsToDisplay = allShows.filter(show => show.status === "Airing");
-        
     } else if (tabName === 'Upcoming Shows') {
         showsToDisplay = upcomingShows.map(show => ({
             ...show,
@@ -151,7 +146,6 @@ function switchShowTab(clickedTab, tabName) {
         }));
     }
 
-    // 3. Send the filtered list to the screen
     renderFilteredShows(showsToDisplay);
 }
 
@@ -171,17 +165,15 @@ function loadShows() {
 
         function updateCarousel(index) {
             const show = carouselShows[index];
-            // FIX: Pulls the wide 'heroImage' instead of the tall 'image'
             heroCard.style.backgroundImage = `linear-gradient(to top, rgba(31, 21, 37, 0.8), transparent), url('${show.heroImage}')`;
             heroCard.style.backgroundSize = 'cover';
             heroCard.style.backgroundPosition = 'center';
             heroCard.style.transition = 'background-image 0.5s ease-in-out'; 
             
             if(heroTitle) heroTitle.innerText = show.title;
-            // FIX 1: Direct Home Carousel button to YouTube Trailer Search
             if(watchBtn) {
                 watchBtn.onclick = (e) => {
-                    e.stopPropagation(); // Stops the background card from clicking
+                    e.stopPropagation(); 
                     let searchQuery = encodeURIComponent(`${show.title} trailer`).replace(/'/g, "%27");
                     window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
                 };
@@ -206,7 +198,7 @@ function loadShows() {
         });
     }
 
-        // B. Load Trending Shows
+    // B. Load Trending Shows
     const trendingGrid = document.getElementById('homeTrendingGrid');
     if (trendingGrid) {
         trendingGrid.innerHTML = '';
@@ -231,7 +223,7 @@ function loadShows() {
         });
     }
 
-        // C. Load Recent Updates 
+    // C. Load Recent Updates 
     const recentList = document.getElementById('homeRecentUpdatesList');
     if (recentList) {
         recentList.innerHTML = '';
@@ -258,7 +250,6 @@ function loadShows() {
             recentList.appendChild(wrapper);
         });
     }
-    
 
     // D. Populate Shows Tab
     const listContainer = document.getElementById('showsListContainer');
@@ -279,7 +270,8 @@ function loadShows() {
             listContainer.appendChild(card);
         });
     }
-        // E. Load Upcoming Shows
+
+    // E. Load Upcoming Shows
     const upcomingContainer = document.getElementById('upcomingShowsList');
     if (upcomingContainer) {
         upcomingContainer.innerHTML = '';
@@ -342,7 +334,6 @@ function renderFilteredShows(showsToRender) {
 function openDetailView(show) {
     currentDetailShow = show; 
     
-    // FIX: Pulls the wide 'heroImage' instead of the tall 'image'
     document.getElementById('detailHeroBg').style.backgroundImage = `url('${show.heroImage}')`;
     document.getElementById('detailHeroTitle').innerText = show.title;
     document.getElementById('detailPoster').style.backgroundImage = `url('${show.image}')`;
@@ -351,7 +342,7 @@ function openDetailView(show) {
     
     const descEl = document.getElementById('detailDescription');
     if(descEl) descEl.innerText = show.desc;
-    // FIX 2: Direct Detail View Banner button to YouTube
+
     const detailWatchBtn = document.querySelector('#detailHeroBg .watch-btn');
     if(detailWatchBtn) {
         detailWatchBtn.onclick = () => {
@@ -366,25 +357,22 @@ function openDetailView(show) {
         updateWatchlistButton(show.id);
     }
 
-  const epContainer = document.getElementById("episode-links-container");
+    const epContainer = document.getElementById("episode-links-container");
     if (epContainer) {
-        // Clear out any old buttons first
         epContainer.innerHTML = ""; 
-
-        // Check if the show has episode links, then draw the buttons
         if (show.episodeLinks && show.episodeLinks.length > 0) {
             show.episodeLinks.forEach(link => {
                 const btn = document.createElement("a");
                 btn.href = link.url;
                 btn.textContent = link.name;
                 btn.className = "episode-btn";
-                btn.target = "_blank"; // Opens the video in a new tab!
+                btn.target = "_blank"; 
                 epContainer.appendChild(btn);
             });
         }
     }
 
-        const relatedScroll = document.querySelector('#detailView .horizontal-scroll');
+    const relatedScroll = document.querySelector('#detailView .horizontal-scroll');
     if (relatedScroll) {
         relatedScroll.innerHTML = ''; 
         const relatedShows = allShows.filter(s => s.id !== show.id).slice(0, 3);
