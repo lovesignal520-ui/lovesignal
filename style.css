@@ -71,7 +71,6 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
     border-radius: 20px; padding: 30px 25px; height: 220px;
     display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
     position: relative; box-shadow: 0 4px 15px rgba(232, 97, 140, 0.1);
-    /* NEW: Adds a smooth fade when the background image changes */
     transition: background-image 0.6s ease-in-out; 
     overflow: hidden;
     cursor: pointer;
@@ -105,8 +104,28 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
 .upcoming-item { display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; }
 .remind-btn { background: transparent; border: 1px solid #E6D0E8; border-radius: 20px; padding: 6px 16px; font-size: 0.75rem; font-weight: 500; color: #7A5C8A; }
 
-/* --- SHOWS VIEW (Lists) --- */
-/* --- SHOWS VIEW (Lists) --- */
+/* --- TEXT UNDER POSTERS (WeTV Style) --- */
+.scroll-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 130px; 
+  flex-shrink: 0; 
+  cursor: pointer;
+}
+.scroll-item-wrapper.square {
+  width: 140px; 
+}
+.card-title-under {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  width: 100%;
+}
+
 /* --- SHOWS VIEW (Lists) --- */
 .top-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
 .tab { padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: var(--text-dark); background: var(--white); border: 1px solid #F0E6EA; cursor: pointer; transition: all 0.2s; }
@@ -219,28 +238,26 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
 .modal-input:focus { border-color: var(--primary-pink); }
 .modal-textarea { width: 100%; padding: 12px 15px; border: 1px solid #F0E6EA; border-radius: 12px; margin-bottom: 15px; font-family: 'Inter', sans-serif; resize: none; height: 120px; outline: none; }
 .modal-textarea:focus { border-color: var(--primary-pink); }
+
 /* ==========================================
    13. DESKTOP & TABLET RESPONSIVENESS
    ========================================== */
 
 @media (min-width: 768px) {
-    /* 1. Target the wrapper AND the inner views to force them to stretch */
     html, body, .app-container {
         max-width: 100% !important;
         width: 100% !important;
         margin: 0 !important;
         display: block !important; 
-        overflow: hidden !important; /* Locks the outer browser window */
+        overflow: hidden !important; 
     }
     
     .view, .profile-bg-wrap {
         max-width: 100% !important;
         width: 100% !important;
         height: auto !important; 
-        /* FIX: We completely removed the 'display' rule so the tabs can hide again! */
     }
 
-    /* 2. Turn Bottom Nav into a Left Sidebar */
     .bottom-nav {
         top: 0; left: 0; bottom: auto;
         width: 250px; height: 100vh;
@@ -249,17 +266,15 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
         border-top: none; border-right: 1px solid #F0E6EA;
         border-radius: 0;
         background: var(--white);
-        position: fixed !important; /* FIX: Locks the sidebar in place */
+        position: fixed !important; 
     }
     
-    /* 3. Make the Nav Icons layout horizontally inside the sidebar */
     .nav-item {
         flex-direction: row; justify-content: flex-start;
         padding: 15px 40px; margin-bottom: 5px; gap: 15px;
         font-size: 1rem; width: 100%;
     }
     
-    /* 4. Shift the App Header and Main Content over perfectly */
     .app-header {
         margin-left: 250px !important; 
         width: calc(100% - 250px) !important;
@@ -277,24 +292,19 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
         box-sizing: border-box !important;
         max-width: 100% !important;
         
-        /* THE MAGIC SCROLL FIX */
-        height: 100vh !important;      /* Sets the container to the height of the monitor */
-        overflow-y: auto !important;   /* Brings the vertical scroll wheel back! */
+        height: 100vh !important;      
+        overflow-y: auto !important;   
         overflow-x: hidden !important;
     }
 
-    /* 5. Expand the Grids to show more items per row */
     .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .episodes-grid { grid-template-columns: repeat(4, 1fr); }
     
-    /* 6. Convert the "Shows" list to a grid */
     .shows-vertical-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .list-card { margin-bottom: 0; } 
 
-    /* 7. Convert My List to a Grid */
     #myListContainer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     
-    /* 8. Widen the pop-up Modals */
     .modal-content { max-width: 600px; padding: 40px 30px; }
 }
 
@@ -303,11 +313,13 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
     .shows-vertical-list { grid-template-columns: repeat(3, 1fr); }
     #myListContainer { grid-template-columns: repeat(5, 1fr); }
 }
+
+/* --- EPISODE BUTTONS --- */
 .episode-buttons-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 5px; /* <-- Just change this number! */
+  margin-top: 5px;
 }
 
 .episode-btn {
@@ -324,27 +336,3 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
 .episode-btn:hover {
   background-color: #ff9eaa;
 }
-/* --- TEXT UNDER POSTERS --- */
-.scroll-item-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 130px; /* Matches your tall-card width */
-  flex-shrink: 0; /* Prevents squishing in the scroll */
-  cursor: pointer;
-}
-
-.scroll-item-wrapper.square {
-  width: 140px; /* Matches your square-card width */
-}
-
-.card-title-under {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-top: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; /* Adds the "..." if title is too long */
-  width: 100%;
-}
-
