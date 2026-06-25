@@ -324,3 +324,27 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
 .episode-btn:hover {
   background-color: #ff9eaa;
 }
+/* --- TEXT UNDER POSTERS --- */
+.scroll-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 130px; /* Matches your tall-card width */
+  flex-shrink: 0; /* Prevents squishing in the scroll */
+  cursor: pointer;
+}
+
+.scroll-item-wrapper.square {
+  width: 140px; /* Matches your square-card width */
+}
+
+.card-title-under {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds the "..." if title is too long */
+  width: 100%;
+}
+
