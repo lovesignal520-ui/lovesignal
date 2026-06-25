@@ -200,18 +200,28 @@ function loadShows() {
         });
     }
 
-    // B. Load Trending Shows
+        // B. Load Trending Shows
     const trendingGrid = document.getElementById('homeTrendingGrid');
     if (trendingGrid) {
         trendingGrid.innerHTML = '';
         allShows.forEach((show, index) => {
             const colors = ['card-pink', 'card-purple', 'card-light-purple'];
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'scroll-item-wrapper';
+            wrapper.onclick = () => openDetailView(show);
+
             const card = document.createElement('div');
             card.className = `show-card tall-card ${colors[index % colors.length]}`;
             card.style.backgroundImage = `url('${show.image}')`;
-            card.style.cursor = 'pointer';
-            card.onclick = () => openDetailView(show);
-            trendingGrid.appendChild(card);
+            
+            const title = document.createElement('span');
+            title.className = 'card-title-under';
+            title.innerText = show.title;
+
+            wrapper.appendChild(card);
+            wrapper.appendChild(title);
+            trendingGrid.appendChild(wrapper);
         });
     }
 
