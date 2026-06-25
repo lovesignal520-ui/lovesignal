@@ -40,8 +40,8 @@ let allShows = [
         "image": "https://i.mydramalist.com/81lbJW_4m.jpg",
         "heroImage": "https://i.mydramalist.com/mO51Y3_3m.jpg",
         "episodeLinks": [
-            { "name": "Episode 10", "url": "https://www.dailymotion.com/video/k2m0NUNB7e6U4DH2w9M" },
-            { "name": "Episode 11", "url": "https://www.dailymotion.com/video/k4XMfT5PQZ3fjnH2AsC" }
+            { "name": "Episode 10", "url": "https://youtu.be/1aWf75cyJNg?si=OzTS7R8PBFDXDm6J" },
+            { "name": "Episode 11", "url": "https://youtu.be/enBN8ONtLbc?si=-VZwiNlVy5ZgNZuz" }
         ],
         "desc": "Young men and women move into the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
         "tags": ["Romance", "Mystery", "Cohabitation"]
