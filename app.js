@@ -90,7 +90,6 @@ let allShows = [
             { "name": "Episode 8", "url": "https://youtu.be/og2jryvi2TQ?si=qrIatzhXOjvkbrtN" },
             { "name": "Episode 9", "url": "https://youtu.be/a5DVv_FuZTE?si=i77kPMrv_HKK4LRk" },
             { "name": "Episode 10", "url": "https://youtu.be/ZiDEtNy1Q04?si=kwVDLph_y8vE1vO2" },
-            { "name": "Episode 10", "url": "https://youtu.be/ZiDEtNy1Q04?si=kwVDLph_y8vE1vO2" },
             { "name": "Episode 11", "url": "https://youtu.be/SjAVBsrai7M?si=xMwKv9HPWu_0SxDt" },
             { "name": "Episode 12", "url": "https://youtu.be/oNXu84vgyjg?si=pyr4wGrxPaeT_5oB" },
             { "name": "Episode 13", "url": "https://youtu.be/VBrIRvVaIGQ?si=SYoOGs-Xqd1Mn-IP" },
