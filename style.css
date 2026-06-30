@@ -120,10 +120,17 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
   font-weight: 600;
   color: var(--text-dark);
   margin-top: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; 
   width: 100%;
+  
+  /* NEW: Allows the text to drop to the next line */
+  white-space: normal; 
+  line-height: 1.3; 
+  
+  /* NEW: Limits the text to a maximum of 2 lines to keep your grid neat */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* --- SHOWS VIEW (Lists) --- */
