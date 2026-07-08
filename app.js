@@ -215,6 +215,31 @@ let allShows = [
         "desc": "A unique matchmaking reality program where singles seek their future spouses while living together under the watchful eyes of their parents.",
         "tags": ["Marriage", "Reality", "Family"]
     },
+        {
+        "id": "better-late-than-single-season-2",
+        "title": "Better Late than Single Season 2",
+        "status": "Airing",
+        "badge": "K-Reality",
+        "rating": "4.7",
+        "episodesCount": "10",
+        "year": "2026",
+        "image": "https://mydramalist.com/photos/JB0DLw_4",
+        "heroImage": "https://mydramalist.com/photos/nOLDy8_4",
+        "episodeLinks": [
+            { "name": "Episode 1", "url": "https://youtu.be/U7Bz7FqQbLs?si=rsrjhbwK7mizN85p" },
+            { "name": "Episode 2", "url": "https://youtu.be/CjU0BGjN1fo?si=SaxUyC-9wZfw8fSC" },
+            { "name": "Episode 3", "url": "https://youtu.be/zf0SbjZpJbw?si=M4b_-jTGaVM0v0J9" },
+            { "name": "Episode 4", "url": "https://youtu.be/hIAZf1cVG5I?si=2J0KSUxuFODuJqNF" },
+            { "name": "Episode 5", "url": "https://youtu.be/0je95IQL8eM?si=KrKAbPXm0uRyXBVy" },
+            { "name": "Episode 6", "url": "https://youtu.be/_XlYIpITTvs?si=Nv_QP_BIV8bf_AqH" },
+            { "name": "Episode 7", "url": "https://youtu.be/nZ9i-MrEPJI?si=ITnw3lq_p1p1kSX0" },
+            { "name": "Episode 8", "url": "https://youtu.be/Mnqf1cCiWhQ?si=Ek7QRnsTLJ2I94Ry" },
+            { "name": "Episode 9", "url": "https://youtu.be/HekUi-AYBP0?si=uaR3ss5jYQ02iJUA" },
+            { "name": "Episode 10", "url": "https://youtu.be/woNLtg92veM?si=fbdiN8xXk7uZWm84" }
+        ],
+        "desc": "A heartwarming dating reality show following a group of singles who have never been in a relationship as they navigate the exciting and awkward world of romance for the first time.",
+        "tags": ["Dating", "Romance", "Reality"]
+    }
 ];
 
 let upcomingShows = [
