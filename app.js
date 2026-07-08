@@ -223,8 +223,8 @@ let allShows = [
         "rating": "4.7",
         "episodesCount": "10",
         "year": "2026",
-        "image": "https://www.netflix.com/title/81788026",
-        "heroImage": "https://www.koreatimes.co.kr/amp/entertainment/shows-dramas/20260701/netflix-dating-reality-better-late-than-single-season-2-promises-fierce-return",
+        "image": "https://i.mydramalist.com/JB0DLw_4m.jpg",
+        "heroImage": "https://i.mydramalist.com/nOLDy8_4c.jpg",
         "episodeLinks": [
             { "name": "Episode 1", "url": "https://youtu.be/U7Bz7FqQbLs?si=rsrjhbwK7mizN85p" },
             { "name": "Episode 2", "url": "https://youtu.be/CjU0BGjN1fo?si=SaxUyC-9wZfw8fSC" },
