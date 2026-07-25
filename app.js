@@ -63,8 +63,7 @@ let allShows = [
             { "name": "Episode 12", "url": "https://youtu.be/ptXNwoKBemE?si=GEgSZCu7IlHblZuZ" },
             { "name": "Episode 13", "url": "https://youtu.be/pKG86hqTZvo?si=YHDix5gu8DOeCIbt" },
             { "name": "Episode 14", "url": "https://youtu.be/69KwbjGcV1w?si=7VDliHHtaYrqTNSm" },
-            { "name": "Episode 15", "url": "https://youtu.be/L5Y0gg75Q8M?si=fobwO-Z6mkLXlYTI" },
-            { "name": "Episode 16", "url": "https://youtu.be/6fzkC7zOLMI?si=pbqITFgH9iG4EDkk" }
+            { "name": "Episode 15", "url": "https://youtu.be/L5Y0gg75Q8M?si=fobwO-Z6mkLXlYTI" }
         ],
         "desc": "Young men and women move into the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
         "tags": ["Romance", "Mystery", "Cohabitation"]
@@ -187,7 +186,11 @@ let allShows = [
             { "name": "Episode 7", "url": "https://youtu.be/WFdjcXwJCuI?si=DzBm1Obzs7-OH-s1" },
             { "name": "Episode 8", "url": "https://youtu.be/zuxh8mj6g0k?si=waSe3bvwdxg2WBlt" },
             { "name": "Episode 9", "url": "https://youtu.be/kX49soc1wzM?si=pdnW9pq2NlrOZ4hb" },
-            { "name": "Episode 10", "url": "https://youtu.be/eownSxi8VI0?si=vcXZByXRmU2GZGZU" }
+            { "name": "Episode 10", "url": "https://youtu.be/eownSxi8VI0?si=vcXZByXRmU2GZGZU" },
+            { "name": "Episode 11", "url": "https://youtu.be/67xiLKEXFa4?si=PEHy67xsSAg1BYlT" },
+            { "name": "Episode 12", "url": "https://youtu.be/we2qa28_Y9E?si=fDYIlBnXdxm3lRSF" },
+            { "name": "Episode 13", "url": "https://youtu.be/SSZYmteNAMw?si=4WXOw_yfRRfichnu" },
+            { "name": "Episode 14", "url": "https://youtu.be/NzwM0xElcEA?si=-UApWx251Y2pZRSg" },
         ],
         "desc": "A dating reality show where participants gather to explore all the possibilities of love and relationships in a shared house.",
         "tags": ["Dating", "Reality", "Romance"]
