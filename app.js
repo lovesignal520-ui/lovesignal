@@ -539,6 +539,33 @@ function openDetailView(show) {
         updateWatchlistButton(show.id);
     }
 
+        // -- NEW SHARE BUTTON LOGIC --
+    const shareBtn = document.getElementById('detailShareBtn');
+    if (shareBtn) {
+        shareBtn.onclick = async () => {
+            const shareText = `I'm watching ${show.title} on LoveSignal! Check it out:`;
+            const shareUrl = window.location.href; // Grabs your current website link
+            
+            try {
+                // This triggers the native mobile share menu (WhatsApp, Instagram, etc.)
+                if (navigator.share) {
+                    await navigator.share({
+                        title: `LoveSignal: ${show.title}`,
+                        text: shareText,
+                        url: shareUrl
+                    });
+                } else {
+                    // Fallback for laptops/older browsers: Copies the link to their clipboard
+                    navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+                    showToast('🔗 Link copied to clipboard!');
+                }
+            } catch (err) {
+                console.log('Share canceled or failed', err);
+            }
+        };
+    }
+
+
     const epContainer = document.getElementById("episode-links-container");
     if (epContainer) {
         epContainer.innerHTML = ""; 
