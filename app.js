@@ -303,11 +303,17 @@ function switchShowTab(clickedTab, tabName) {
     let showsToDisplay = [];
 
     if (tabName === 'Recent') {
+        // Shows everything, newest added first
         showsToDisplay = [...allShows].reverse();
+        
     } else if (tabName === 'Completed') {
-        showsToDisplay = allShows.filter(show => show.status === "Completed");
+        // Filters for Completed shows, newest added first
+        showsToDisplay = allShows.filter(show => show.status === "Completed").reverse();
+        
     } else if (tabName === 'New Release') {
-        showsToDisplay = allShows.filter(show => show.status === "Airing");
+        // Filters for currently Airing shows, newest added first!
+        showsToDisplay = allShows.filter(show => show.status === "Airing" && show.year === "2026").reverse();
+        
     } else if (tabName === 'Upcoming Shows') {
         showsToDisplay = upcomingShows.map(show => ({
             ...show,
@@ -317,7 +323,7 @@ function switchShowTab(clickedTab, tabName) {
             rating: "-",
             desc: "Get ready for this exciting new show! Set a reminder so you don't miss the premiere.",
             tags: ["Anticipated", "Upcoming"]
-        }));
+        })).reverse();
     }
 
     renderFilteredShows(showsToDisplay);
