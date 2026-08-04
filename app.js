@@ -50,7 +50,7 @@ let allShows = [
     {
         "id": "heart-signal-5",
         "title": "Heart Signal 5",
-        "status": "Airing",
+        "status": "Completed",
         "badge": "K-Reality",
         "rating": "4.9",
         "episodesCount": "15",
@@ -117,7 +117,7 @@ let allShows = [
     {
         "id": "noona-you-are-a-woman-to-me-2",
         "title": "Noona You Are a Woman to Me 2",
-        "status": "Airing",
+        "status": "Completed",
         "badge": "K-Reality",
         "rating": "4.6",
         "episodesCount": "14",
@@ -242,16 +242,29 @@ let allShows = [
         ],
         "desc": "A heartwarming dating reality show following a group of singles who have never been in a relationship as they navigate the exciting and awkward world of romance for the first time.",
         "tags": ["Dating", "Romance", "Reality"]
+    },
+    
+        {
+        "id": "heart-signal-season-9-china",
+        "title": "Heart Signal Season 9 (China)",
+        "status": "Airing",
+        "badge": "C-Reality",
+        "rating": "4.8",
+        "episodesCount": "10",
+        "year": "2026",
+        "image": "https://mydramalist.com/photos/LwkZ87_3",
+        "heroImage": "https://mydramalist.com/photos/mORB1m_3",
+        "episodeLinks": [
+            // { "name": "Episode 1", "url": "YOUR_LINK_HERE" }
+        ],
+        "desc": "A group of strangers live together in the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
+        "tags": ["Dating", "Romance", "Reality"]
     }
 
 ];
 
 let upcomingShows = [
-    {
-        "id": "heart-signal-9",
-        "title": "Heart Signal 9",
-        "image": "https://i.mydramalist.com/KpOmbJ_4c.jpg?v=1"
-    }
+    
 ];
 
 let watchlist = JSON.parse(localStorage.getItem('lovesignal_watchlist')) || [];
