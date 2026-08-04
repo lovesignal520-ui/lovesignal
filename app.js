@@ -539,15 +539,17 @@ function openDetailView(show) {
         updateWatchlistButton(show.id);
     }
 
-        // -- NEW SHARE BUTTON LOGIC --
+            // -- NEW SHARE BUTTON LOGIC --
     const shareBtn = document.getElementById('detailShareBtn');
     if (shareBtn) {
         shareBtn.onclick = async () => {
             const shareText = `I'm watching ${show.title} on LoveSignal! Check it out:`;
-            const shareUrl = window.location.href; // Grabs your current website link
+            
+            // This builds a special link with the show's ID attached to the end!
+            const baseUrl = window.location.origin + window.location.pathname;
+            const shareUrl = `${baseUrl}?show=${show.id}`; 
             
             try {
-                // This triggers the native mobile share menu (WhatsApp, Instagram, etc.)
                 if (navigator.share) {
                     await navigator.share({
                         title: `LoveSignal: ${show.title}`,
@@ -555,7 +557,6 @@ function openDetailView(show) {
                         url: shareUrl
                     });
                 } else {
-                    // Fallback for laptops/older browsers: Copies the link to their clipboard
                     navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
                     showToast('🔗 Link copied to clipboard!');
                 }
@@ -564,6 +565,7 @@ function openDetailView(show) {
             }
         };
     }
+
 
 
     const epContainer = document.getElementById("episode-links-container");
@@ -817,4 +819,19 @@ document.addEventListener('click', (e) => {
 window.onload = () => {
     loadShows();
     renderMyList();
+
+    // -- NEW DEEP LINKING LOGIC --
+    // Check if someone clicked a shared link with "?show=" at the end
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedShowId = urlParams.get('show');
+    
+    if (sharedShowId) {
+        // Find the show that matches the ID in the link
+        const showToOpen = allShows.find(s => s.id === sharedShowId);
+        if (showToOpen) {
+            // Automatically pop open that specific show's detail page!
+            openDetailView(showToOpen);
+        }
+    }
 };
+
