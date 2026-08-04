@@ -343,3 +343,130 @@ body { background: var(--bg-color); color: var(--text-dark); -webkit-font-smooth
 .episode-btn:hover {
   background-color: #ff9eaa;
 }
+
+
+/* =========================================================
+   LOVESIGNAL V2 ACCESSIBILITY + SEO CONTENT UPGRADES
+   ========================================================= */
+:focus-visible {
+    outline: 3px solid rgba(232, 97, 140, 0.45);
+    outline-offset: 3px;
+}
+
+button, .nav-item, .tab, .view-all, .menu-item, .show-card, .list-card {
+    touch-action: manipulation;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.profile-bio {
+    max-width: 320px;
+    margin: 7px auto 0;
+    color: var(--text-light);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.content-empty-state {
+    width: 100%;
+    min-width: 260px;
+    padding: 24px 20px;
+    border: 1px dashed #D9C5CC;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    line-height: 1.45;
+}
+
+.content-empty-state strong { color: var(--text-dark); }
+
+.saved-show-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.saved-show-card .show-card { width: 100%; }
+.saved-show-card .card-title-under {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.site-notice {
+    margin: 16px 20px 0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #FFF0F5;
+    color: #6D4050;
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+.site-notice a { color: var(--primary-pink); font-weight: 700; }
+
+.seo-footer {
+    padding: 24px 20px 110px;
+    color: #725F68;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.seo-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 14px;
+    margin-bottom: 10px;
+}
+
+.seo-footer a { color: var(--primary-pink); text-decoration: none; font-weight: 600; }
+
+.ad-slot {
+    width: min(100%, 360px);
+    min-height: 90px;
+    margin: 0 auto;
+    border: 1px dashed #D9C5CC;
+    border-radius: 12px;
+    background: #F8F0F3;
+    display: grid;
+    place-items: center;
+    color: #9C8B92;
+    font-size: 0.72rem;
+    text-align: center;
+    padding: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Normalize interactive elements introduced in the semantic V2 markup. */
+.view-all, .nav-item, .menu-item, .cat-card, .close-modal, .dot {
+    font: inherit;
+}
+.view-all, .nav-item, .close-modal, .dot {
+    border: 0;
+    background: transparent;
+}
+.nav-item { min-width: 54px; }
+.menu-item { width: 100%; color: var(--text-dark); text-decoration: none; cursor: pointer; }
+.cat-card { width: 100%; border: 0; color: var(--text-dark); }
+.close-modal { cursor: pointer; color: var(--text-dark); font-size: 1.6rem; line-height: 1; }
+.carousel-dots .dot { padding: 0; }
+.skip-link:focus { left: 8px !important; }

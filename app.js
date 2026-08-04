@@ -270,7 +270,51 @@ let upcomingShows = [
     
 ];
 
-let watchlist = JSON.parse(localStorage.getItem('lovesignal_watchlist')) || [];
+function readStoredJSON(key, fallback) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value ?? fallback;
+    } catch (error) {
+        console.warn(`Could not read ${key} from localStorage`, error);
+        return fallback;
+    }
+}
+
+function escapeHTML(value = '') {
+    return String(value).replace(/[&<>'"]/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+    })[character]);
+}
+
+function isSafeExternalUrl(value) {
+    try {
+        const url = new URL(value, window.location.origin);
+        return ['http:', 'https:'].includes(url.protocol);
+    } catch (error) {
+        return false;
+    }
+}
+
+const SITE_CONFIG = {
+    // Create free Formspree endpoints and paste them here.
+    feedbackEndpoint: "",
+    showRequestEndpoint: ""
+};
+
+const BASE_TITLE = "LoveSignal | Asian Dating Reality Shows & Romance";
+const BASE_DESCRIPTION = "Discover Asian dating reality shows, track your watchlist, explore episodes, and find legal viewing links.";
+
+let watchlist = readStoredJSON('lovesignal_watchlist', []);
+let reminders = readStoredJSON('lovesignal_reminders', []);
+let userProfile = readStoredJSON('lovesignal_profile', {
+    name: "Name",
+    avatar: "💕",
+    bio: ""
+});
 let currentDetailShow = null; 
 let tempSelectedAvatar = null; 
 
@@ -278,23 +322,36 @@ let tempSelectedAvatar = null;
 // 2. ROUTING LOGIC
 // ==========================================
 function switchTab(viewId, navIndex) {
+    const targetView = document.getElementById(viewId);
+    if (!targetView) {
+        console.warn(`View not found: ${viewId}`);
+        return;
+    }
+
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById(viewId).classList.add('active');
-    
+    targetView.classList.add('active');
+
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
     navItems.forEach(item => {
         item.classList.remove('active');
         const svg = item.querySelector('svg');
         if(svg && svg.hasAttribute('stroke')) svg.setAttribute('stroke', 'currentColor');
     });
-    
+
     if(navIndex >= 0 && navItems[navIndex]) {
         const activeNav = navItems[navIndex];
         activeNav.classList.add('active');
         const activeSvg = activeNav.querySelector('svg');
         if(activeSvg && activeSvg.hasAttribute('stroke')) activeSvg.setAttribute('stroke', '#E8618C');
     }
-    window.scrollTo(0, 0); 
+
+    if (viewId === 'homeView') {
+        resetPageMetadata();
+        const cleanUrl = window.location.origin + window.location.pathname;
+        history.replaceState({ view: 'home' }, '', cleanUrl);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
 }
 
 function switchShowTab(clickedTab, tabName) {
@@ -314,7 +371,8 @@ function switchShowTab(clickedTab, tabName) {
         
     } else if (tabName === 'New Release') {
         // Filters for currently Airing shows, newest added first!
-        showsToDisplay = allShows.filter(show => show.status === "Airing" && show.year === "2026").reverse();
+        const currentYear = String(new Date().getFullYear());
+        showsToDisplay = allShows.filter(show => show.status === "Airing" && String(show.year) === currentYear).reverse();
         
     } else if (tabName === 'Upcoming Shows') {
         showsToDisplay = upcomingShows.map(show => ({
@@ -353,11 +411,23 @@ function loadShows() {
             heroCard.style.transition = 'background-image 0.5s ease-in-out'; 
             
             if(heroTitle) heroTitle.innerText = show.title;
+            heroCard.style.cursor = 'pointer';
+            heroCard.setAttribute('role', 'button');
+            heroCard.setAttribute('tabindex', '0');
+            heroCard.setAttribute('aria-label', `Open ${show.title} details`);
+            heroCard.onclick = () => openDetailView(show);
+            heroCard.onkeydown = (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openDetailView(show);
+                }
+            };
+
             if(watchBtn) {
                 watchBtn.onclick = (e) => {
                     e.stopPropagation(); 
                     let searchQuery = encodeURIComponent(`${show.title} trailer`).replace(/'/g, "%27");
-                    window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
+                    openExternalUrl(`https://www.youtube.com/results?search_query=${searchQuery}`);
                 };
             }
 
@@ -457,16 +527,29 @@ function loadShows() {
     const upcomingContainer = document.getElementById('upcomingShowsList');
     if (upcomingContainer) {
         upcomingContainer.innerHTML = '';
-        upcomingShows.forEach((show, index) => {
-            const colors = ['card-pink', 'card-purple', 'card-light-pink'];
-            upcomingContainer.innerHTML += `
-                <div class="scroll-item-wrapper">
-                    <div class="show-card tall-card ${colors[index % colors.length]}" style="background-image: url('${show.image}');"></div>
-                    <span class="card-title-under">${show.title}</span>
-                    <button class="pill-btn outline-btn remind-btn" style="padding: 8px; font-size: 0.85rem; justify-content: center; margin-top: 5px;">Remind me</button>
+
+        if (upcomingShows.length === 0) {
+            upcomingContainer.innerHTML = `
+                <div class="content-empty-state">
+                    <strong>New announcements coming soon</strong>
+                    <span>Confirmed upcoming shows will appear here.</span>
                 </div>
             `;
-        });
+        } else {
+            upcomingShows.forEach((show, index) => {
+                const colors = ['card-pink', 'card-purple', 'card-light-pink'];
+                const isSaved = reminders.includes(show.id);
+                upcomingContainer.innerHTML += `
+                    <div class="scroll-item-wrapper">
+                        <div class="show-card tall-card ${colors[index % colors.length]}" style="background-image: url('${show.image}');" role="img" aria-label="${show.title} poster"></div>
+                        <span class="card-title-under">${show.title}</span>
+                        <button class="pill-btn outline-btn remind-btn" data-show-id="${show.id}" style="padding: 8px; font-size: 0.85rem; justify-content: center; margin-top: 5px;">
+                            ${isSaved ? '✓ Reminder saved' : 'Remind me'}
+                        </button>
+                    </div>
+                `;
+            });
+        }
     }
 }
 
@@ -510,11 +593,80 @@ function renderFilteredShows(showsToRender) {
     });
 }
 
+function openExternalUrl(url) {
+    if (!isSafeExternalUrl(url)) {
+        showToast('This external link is not valid.');
+        return;
+    }
+
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null;
+}
+
+async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    textarea.remove();
+}
+
+function setMetaContent(selector, content) {
+    const element = document.querySelector(selector);
+    if (element) element.setAttribute('content', content);
+}
+
+function updatePageMetadata(show) {
+    const pageUrl = `${window.location.origin}${window.location.pathname}?show=${encodeURIComponent(show.id)}`;
+    document.title = `${show.title} | LoveSignal`;
+    setMetaContent('meta[name="description"]', show.desc || BASE_DESCRIPTION);
+    setMetaContent('meta[property="og:title"]', `${show.title} | LoveSignal`);
+    setMetaContent('meta[property="og:description"]', show.desc || BASE_DESCRIPTION);
+    setMetaContent('meta[property="og:image"]', show.heroImage || show.image || '');
+    setMetaContent('meta[property="og:url"]', pageUrl);
+    setMetaContent('meta[name="twitter:title"]', `${show.title} | LoveSignal`);
+    setMetaContent('meta[name="twitter:description"]', show.desc || BASE_DESCRIPTION);
+    setMetaContent('meta[name="twitter:image"]', show.heroImage || show.image || '');
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', pageUrl);
+}
+
+function resetPageMetadata() {
+    const pageUrl = `${window.location.origin}${window.location.pathname}`;
+    document.title = BASE_TITLE;
+    setMetaContent('meta[name="description"]', BASE_DESCRIPTION);
+    setMetaContent('meta[property="og:title"]', BASE_TITLE);
+    setMetaContent('meta[property="og:description"]', BASE_DESCRIPTION);
+    setMetaContent('meta[property="og:url"]', pageUrl);
+    setMetaContent('meta[name="twitter:title"]', BASE_TITLE);
+    setMetaContent('meta[name="twitter:description"]', BASE_DESCRIPTION);
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', pageUrl);
+}
+
 // ==========================================
 // 4. DETAIL VIEW LOGIC
 // ==========================================
-function openDetailView(show) {
-    currentDetailShow = show; 
+function openDetailView(show, updateHistory = true) {
+    if (!show) return;
+
+    currentDetailShow = show;
+    updatePageMetadata(show);
+
+    if (updateHistory) {
+        const detailUrl = `${window.location.origin}${window.location.pathname}?show=${encodeURIComponent(show.id)}`;
+        history.pushState({ showId: show.id }, '', detailUrl);
+    }
     
     document.getElementById('detailHeroBg').style.backgroundImage = `url('${show.heroImage}')`;
     document.getElementById('detailHeroTitle').innerText = show.title;
@@ -529,7 +681,7 @@ function openDetailView(show) {
     if(detailWatchBtn) {
         detailWatchBtn.onclick = () => {
             let searchQuery = encodeURIComponent(`${show.title} trailer`).replace(/'/g, "%27");
-            window.open(`https://www.youtube.com/results?search_query=${searchQuery}`, '_blank');
+            openExternalUrl(`https://www.youtube.com/results?search_query=${searchQuery}`);
         };
     }
 
@@ -557,11 +709,19 @@ function openDetailView(show) {
                         url: shareUrl
                     });
                 } else {
-                    navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+                    await copyText(`${shareText} ${shareUrl}`);
                     showToast('🔗 Link copied to clipboard!');
                 }
             } catch (err) {
-                console.log('Share canceled or failed', err);
+                if (err && err.name !== 'AbortError') {
+                    console.error('Share failed', err);
+                    try {
+                        await copyText(`${shareText} ${shareUrl}`);
+                        showToast('🔗 Link copied to clipboard!');
+                    } catch (copyError) {
+                        showToast('Could not share this link.');
+                    }
+                }
             }
         };
     }
@@ -577,16 +737,28 @@ function openDetailView(show) {
                 btn.href = link.url;
                 btn.textContent = link.name;
                 btn.className = "episode-btn";
-                btn.target = "_blank"; 
+                btn.target = "_blank";
+                btn.rel = "noopener noreferrer";
                 epContainer.appendChild(btn);
             });
+        } else {
+            epContainer.innerHTML = '<p class="content-empty-state">Official episode links have not been added yet.</p>';
         }
     }
 
     const relatedScroll = document.querySelector('#detailView .horizontal-scroll');
     if (relatedScroll) {
         relatedScroll.innerHTML = ''; 
-        const relatedShows = allShows.filter(s => s.id !== show.id).slice(0, 3);
+        const relatedShows = allShows
+            .filter(s => s.id !== show.id)
+            .sort((a, b) => {
+                const score = item => {
+                    const sharedTags = (item.tags || []).filter(tag => (show.tags || []).includes(tag)).length;
+                    return (item.badge === show.badge ? 3 : 0) + sharedTags;
+                };
+                return score(b) - score(a);
+            })
+            .slice(0, 3);
         
         relatedShows.forEach((relatedShow, index) => {
             const bgColors = ['card-purple', 'card-pink', 'card-light-purple'];
@@ -640,25 +812,29 @@ function updateWatchlistButton(showId) {
 function renderMyList() {
     const container = document.getElementById('myListContainer');
     if (!container) return;
-    
-    let html = `
-        <div class="empty-list-card" id="emptyListMsg" style="height: 200px; padding: 20px;">
-            <div class="add-box" style="height: 100%; width: 100%; cursor:pointer;" onclick="switchTab('showsView', 1)">
-                <div class="add-icon">+</div>
-                <span>Find Shows</span>
-            </div>
-        </div>
-    `;
 
-    watchlist.forEach(savedId => {
-        const show = allShows.find(s => s.id === savedId);
-        if (show) {
-            html += `
-                <div class="show-card square-card" style="background-image: url('${show.image}'); height: 200px; width: 100%; cursor: pointer;" onclick="openDetailView(allShows.find(s => s.id === '${show.id}'))"></div>
-            `;
-        }
-    });
-    container.innerHTML = html;
+    const savedShows = watchlist
+        .map(savedId => allShows.find(show => show.id === savedId))
+        .filter(Boolean);
+
+    if (savedShows.length === 0) {
+        container.innerHTML = `
+            <div class="empty-list-card" id="emptyListMsg" style="height: 200px; padding: 20px;">
+                <div class="add-box" style="height: 100%; width: 100%; cursor:pointer;" onclick="switchTab('showsView', 1)">
+                    <div class="add-icon">+</div>
+                    <span>Find Shows</span>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = savedShows.map(show => `
+        <div class="saved-show-card" onclick="openDetailView(allShows.find(s => s.id === '${show.id}'))" role="button" tabindex="0">
+            <div class="show-card square-card" style="background-image: url('${show.image}');"></div>
+            <span class="card-title-under">${show.title}</span>
+        </div>
+    `).join('');
 }
 
 // ==========================================
@@ -674,14 +850,25 @@ function selectCategory(categoryName) {
 const searchInput = document.getElementById('searchInput');
 if(searchInput) {
     searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+        const searchTerm = e.target.value.trim().toLowerCase();
         if (searchTerm.length > 0 && !document.getElementById('showsView').classList.contains('active')) {
             switchTab('showsView', 1);
         }
+
         const filteredShows = allShows.filter(show => {
-            return show.title.toLowerCase().includes(searchTerm) || show.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+            const searchableText = [
+                show.title,
+                show.badge,
+                show.status,
+                show.year,
+                show.desc,
+                ...(show.tags || [])
+            ].filter(Boolean).join(' ').toLowerCase();
+
+            return searchableText.includes(searchTerm);
         });
-        renderFilteredShows(filteredShows);
+
+        renderFilteredShows(searchTerm ? filteredShows : [...allShows].reverse());
     });
 }
 
@@ -712,19 +899,19 @@ function openProfileModal(type) {
     if (type === 'Feedback') {
         body.innerHTML = `
             <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.9rem;">We'd love to hear your thoughts!</p>
-            <textarea class="modal-textarea" placeholder="Type your feedback here..."></textarea>
-            <button class="pill-btn watch-btn full-width" onclick="submitModalForm('Feedback sent successfully!')" style="justify-content: center; padding: 12px;">Submit Feedback</button>
+            <textarea id="feedbackMessage" class="modal-textarea" maxlength="1500" placeholder="Type your feedback here..." required></textarea>
+            <button class="pill-btn watch-btn full-width" onclick="submitModalForm('feedback')" style="justify-content: center; padding: 12px;">Submit Feedback</button>
         `;
     } else if (type === 'Request a show') {
         body.innerHTML = `
             <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.9rem;">Missing a show? Let us know!</p>
-            <input type="text" class="modal-input" placeholder="Show Title">
-            <input type="text" class="modal-input" placeholder="Country">
-            <button class="pill-btn watch-btn full-width" onclick="submitModalForm('Show request submitted!')" style="justify-content: center; padding: 12px;">Submit Request</button>
+            <input type="text" id="requestShowTitle" class="modal-input" maxlength="120" placeholder="Show Title" required>
+            <input type="text" id="requestCountry" class="modal-input" maxlength="80" placeholder="Country">
+            <button class="pill-btn watch-btn full-width" onclick="submitModalForm('showRequest')" style="justify-content: center; padding: 12px;">Submit Request</button>
         `;
     } else if (type === 'Edit Profile') {
-        const currentNameElement = document.getElementById('profileName');
-        const currentName = currentNameElement ? currentNameElement.innerText : '';
+        const currentName = escapeHTML(userProfile.name || 'Name');
+        const currentBio = escapeHTML(userProfile.bio || '');
         body.innerHTML = `
             <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.9rem; text-align: center;">Choose your avatar</p>
             <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 20px;">
@@ -733,14 +920,14 @@ function openProfileModal(type) {
                 <div class="avatar-circle avatar-choice" style="width: 50px; height: 50px; background: #FDE8F3; box-shadow: none; font-size: 1.5rem; cursor: pointer; border: 2px solid transparent;" onclick="selectAvatar(this, '🐻')">🐻</div>
             </div>
             <input type="text" id="editNameInput" class="modal-input" placeholder="Display Name" value="${currentName}">
-            <textarea class="modal-textarea" style="height: 80px;" placeholder="Write a short bio..."></textarea>
+            <textarea id="editBioInput" class="modal-textarea" style="height: 80px;" maxlength="180" placeholder="Write a short bio...">${currentBio}</textarea>
             <button class="pill-btn watch-btn full-width" onclick="saveProfile()" style="justify-content: center; padding: 12px;">Save Changes</button>
         `;
     } else if (type.includes('Support')) {
         body.innerHTML = `
             <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.9rem; text-align: center;"> Support the LoveSignal for more updates </p>
             <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-                <button class="pill-btn watch-btn" onclick="window.open('https://ko-fi.com/lovesignal', '_blank')">💖 Custom</button>
+                <button class="pill-btn watch-btn" onclick="openExternalUrl('https://ko-fi.com/lovesignal')">💖 Custom</button>
             </div>
         `;
     } else if (type === 'FAQ') {
@@ -764,7 +951,7 @@ function openProfileModal(type) {
         body.innerHTML = `
             <p style="margin-bottom: 10px; font-size: 0.85rem; font-weight: bold;">Your Privacy Matters</p>
             <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.8rem;">LoveSignal does not collect or sell personal data. Your Profile details and Watchlist are stored <b>locally on your device</b>.</p>
-            <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.8rem;">We do not use third-party tracking cookies.</p>
+            <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.8rem;">The site uses Google Analytics to understand traffic. If advertising is enabled later, the policy must also explain advertising cookies and consent choices.</p>
             <button class="pill-btn outline-btn full-width" onclick="closeModal()">Close</button>
         `;
     } else if (type === 'DMCA') {
@@ -786,9 +973,55 @@ function closeModal() {
     if(modal) modal.classList.remove('active');
 }
 
-function submitModalForm(toastMessage) {
-    closeModal();
-    showToast('✅ ' + toastMessage);
+async function submitModalForm(formType) {
+    const isFeedback = formType === 'feedback';
+    const endpoint = isFeedback ? SITE_CONFIG.feedbackEndpoint : SITE_CONFIG.showRequestEndpoint;
+
+    const payload = isFeedback
+        ? { type: 'feedback', message: document.getElementById('feedbackMessage')?.value.trim() }
+        : {
+            type: 'show-request',
+            title: document.getElementById('requestShowTitle')?.value.trim(),
+            country: document.getElementById('requestCountry')?.value.trim()
+        };
+
+    if (isFeedback && !payload.message) {
+        showToast('Please write your feedback first.');
+        return;
+    }
+
+    if (!isFeedback && !payload.title) {
+        showToast('Please enter the show title.');
+        return;
+    }
+
+    if (!endpoint) {
+        showToast('⚠️ Form receiving service is not connected yet.');
+        return;
+    }
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...payload,
+                page: window.location.href,
+                submittedAt: new Date().toISOString()
+            })
+        });
+
+        if (!response.ok) throw new Error(`Form returned ${response.status}`);
+
+        closeModal();
+        showToast(isFeedback ? '✅ Feedback sent successfully!' : '✅ Show request submitted!');
+    } catch (error) {
+        console.error('Form submission failed', error);
+        showToast('Could not send this form. Please try again.');
+    }
 }
 
 function selectAvatar(element, emoji) {
@@ -797,21 +1030,58 @@ function selectAvatar(element, emoji) {
     tempSelectedAvatar = emoji;
 }
 
-function saveProfile() {
-    const newName = document.getElementById('editNameInput').value;
-    document.getElementById('profileName').innerText = newName;
-    
-    if (tempSelectedAvatar !== null) {
-        const avatarContainer = document.getElementById('profileAvatar');
-        avatarContainer.innerHTML = tempSelectedAvatar; 
-        avatarContainer.style.fontSize = '2.5rem'; 
+function applyStoredProfile() {
+    const nameElement = document.getElementById('profileName');
+    const avatarContainer = document.getElementById('profileAvatar');
+    const bioElement = document.getElementById('profileBio');
+
+    if (nameElement) nameElement.innerText = userProfile.name || 'Name';
+    if (avatarContainer) {
+        avatarContainer.innerHTML = userProfile.avatar || '💕';
+        avatarContainer.style.fontSize = '2.5rem';
     }
+    if (bioElement) bioElement.innerText = userProfile.bio || '';
+}
+
+function saveProfile() {
+    const newName = document.getElementById('editNameInput')?.value.trim() || 'Name';
+    const newBio = document.getElementById('editBioInput')?.value.trim() || '';
+
+    userProfile = {
+        name: newName.slice(0, 40),
+        avatar: tempSelectedAvatar || userProfile.avatar || '💕',
+        bio: newBio.slice(0, 180)
+    };
+
+    localStorage.setItem('lovesignal_profile', JSON.stringify(userProfile));
+    applyStoredProfile();
+    tempSelectedAvatar = null;
     closeModal();
     showToast('✅ Profile updated successfully!');
 }
 
 document.addEventListener('click', (e) => {
-    if (e.target.closest('.remind-btn')) showToast("⏰ Added to your reminders!");
+    const button = e.target.closest('.remind-btn');
+    if (!button) return;
+
+    const showId = button.dataset.showId;
+    if (!showId) {
+        showToast('This reminder does not have a show attached yet.');
+        return;
+    }
+
+    const index = reminders.indexOf(showId);
+    if (index === -1) {
+        reminders.push(showId);
+        button.textContent = '✓ Reminder saved';
+        showToast('⏰ Reminder saved on this device!');
+    } else {
+        reminders.splice(index, 1);
+        button.textContent = 'Remind me';
+        showToast('Reminder removed.');
+    }
+
+    localStorage.setItem('lovesignal_reminders', JSON.stringify(reminders));
 });
 // ==========================================
 // 8. STARTUP ENGINE
@@ -819,19 +1089,25 @@ document.addEventListener('click', (e) => {
 window.onload = () => {
     loadShows();
     renderMyList();
+    applyStoredProfile();
+    resetPageMetadata();
 
-    // -- NEW DEEP LINKING LOGIC --
-    // Check if someone clicked a shared link with "?show=" at the end
     const urlParams = new URLSearchParams(window.location.search);
     const sharedShowId = urlParams.get('show');
-    
+
     if (sharedShowId) {
-        // Find the show that matches the ID in the link
         const showToOpen = allShows.find(s => s.id === sharedShowId);
-        if (showToOpen) {
-            // Automatically pop open that specific show's detail page!
-            openDetailView(showToOpen);
-        }
+        if (showToOpen) openDetailView(showToOpen, false);
     }
 };
 
+window.addEventListener('popstate', () => {
+    const showId = new URLSearchParams(window.location.search).get('show');
+    const show = allShows.find(item => item.id === showId);
+
+    if (show) {
+        openDetailView(show, false);
+    } else {
+        switchTab('homeView', 0);
+    }
+});

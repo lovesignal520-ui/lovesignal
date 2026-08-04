@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lovesignal520-ui.github.io/lovesignal/sitemap.xml

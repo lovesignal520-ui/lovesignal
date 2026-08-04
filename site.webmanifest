@@ -1,0 +1,11 @@
+{
+  "name": "LoveSignal",
+  "short_name": "LoveSignal",
+  "description": "Discover and track Asian dating reality shows.",
+  "start_url": "/lovesignal/",
+  "scope": "/lovesignal/",
+  "display": "standalone",
+  "background_color": "#FFF8FA",
+  "theme_color": "#E8618C",
+  "icons": [{"src":"favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
