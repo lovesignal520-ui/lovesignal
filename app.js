@@ -255,7 +255,8 @@ let allShows = [
         "image": "https://mydramalist.com/photos/LwkZ87_3",
         "heroImage": "https://mydramalist.com/photos/mORB1m_3",
         "episodeLinks": [
-            // { "name": "Episode 1", "url": "YOUR_LINK_HERE" }
+            { "name": "Episode Preview Part 1", "url": "https://youtu.be/QaMUlPJ8-WU?si=Fz3B6kIk7mBCBfNg" },
+            { "name": "Episode Preview Part 2", "url": "https://youtu.be/-cF42kBz9ew?si=BsPN7QoaaAOPC2Ma" }
         ],
         "desc": "A group of strangers live together in the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
         "tags": ["Dating", "Romance", "Reality"]
