@@ -258,7 +258,8 @@ let allShows = [
             { "name": "Episode Preview Part 1", "url": "https://youtu.be/buQS5hlcSRI?si=QBCTWCnxMr3FLV-j" },
             { "name": "Episode Preview Part 2", "url": "https://youtu.be/rvfIGhlOhRY?si=H6DujN_rUwQVn9zS" },
             { "name": "Episode 1 Part 1", "url": "https://youtu.be/QaMUlPJ8-WU?si=Fz3B6kIk7mBCBfNg" },
-            { "name": "Episode 1 Part 2", "url": "https://youtu.be/-cF42kBz9ew?si=BsPN7QoaaAOPC2Ma" }
+            { "name": "Episode 1 Part 2", "url": "https://youtu.be/-cF42kBz9ew?si=BsPN7QoaaAOPC2Ma" },
+            { "name": "Episode 1 Part 3", "url": "https://youtu.be/GzEd0zPxfcA?si=6zLQCh-qHuIHpZdx" },
         ],
         "desc": "A group of strangers live together in the Signal House. Celebrity panelists observe their everyday interactions to decode their hidden romantic signals.",
         "tags": ["Dating", "Romance", "Reality"]
