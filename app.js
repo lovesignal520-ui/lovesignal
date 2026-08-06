@@ -253,7 +253,7 @@ let allShows = [
         "episodesCount": "10",
         "year": "2026",
         "image": "https://wetv.vip/hi/play/f5ya6dcwpdeqqfv-Heart_Signal_(China_Version)_S9",
-        "heroImage": "https://mydramalist.com/photos/mORB1m_3",
+        "heroImage": "https://share.google/OeSzfpcNzpC1WrVnv",
         "episodeLinks": [
             { "name": "Episode Preview Part 1", "url": "https://youtu.be/buQS5hlcSRI?si=QBCTWCnxMr3FLV-j" },
             { "name": "Episode Preview Part 2", "url": "https://youtu.be/rvfIGhlOhRY?si=H6DujN_rUwQVn9zS" },
